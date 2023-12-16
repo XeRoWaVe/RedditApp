@@ -1,12 +1,16 @@
 import Post from "../Post/Post"
+import '../Storylist/Storylist.css'
 
 
-const Storylist = () => {
+const Storylist = ({redditData}) => {
+
     return (
-        <>
-        <span>Stories go here</span>
-        <Post />
-        </>
+        <div className="post-container">
+            <Post />
+            {/* {redditData.map((item) => {
+                return <Post key={item.data.id} author={item.data.author} title={item.data.title} image={item.data.thumbnail} />
+            }).catch((err) => console.log(err))} */}
+        </div>
     )
 }
 

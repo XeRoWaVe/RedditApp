@@ -1,13 +1,14 @@
-const Post = () => {
+const Post = (props) => {
     return (
         <div>
             <div>
-                <h1>Title of Post</h1>
-                <span>image</span>
+                <h1>{props.title}</h1>
+                <h2>{props.author}</h2>
+                <span><img src={props.image} /></span>
                 <div>
-                    <span>posted By</span>
-                    <span>posted when</span>
-                    <span>comments button</span>
+                    <p>posted By</p>
+                    <p>posted when</p>
+                    <p>comments button</p>
                 </div>
             </div>
         </div>
