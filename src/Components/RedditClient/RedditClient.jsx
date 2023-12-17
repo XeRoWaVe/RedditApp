@@ -1,11 +1,16 @@
 import Navigation from "../Navigation/Navigation";
 import Storylist from "../Storylist/Storylist";
+import Subreddits from "../Subreddits/Subreddits";
+import './RedditClient.css'
 
-const RedditClient = () => {
+const RedditClient = ({redditData}) => {
   return (
     <div>
       <Navigation />
-      <Storylist />
+      <div className="container">
+      {!!redditData && <Storylist redditData={redditData} />}
+      <Subreddits />
+      </div>
     </div>
   );
 };

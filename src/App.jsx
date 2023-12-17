@@ -1,33 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import "./App.css";
 import RedditClient from "./Components/RedditClient/RedditClient";
 
 function App() {
-  // const [redditData, setRedditData] = useState({})
+  const [redditData, setRedditData] = useState([]);
+  const [subredditData, setSubredditData] = useState({});
+  const [commentsData, setCommentsData] = useState({});
 
-  // const fetchTest = async () => {
-  //   try {
-  //   const data = await fetch(`https://www.reddit.com/best.json`)
-  //   const response = await data.json()
-  //   setRedditData(await response.data.children)
-  // }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+  useEffect(() => {
+    let isSubbed = true;
+    const fetchData = async () => {
+      const data = await fetch("https://www.reddit.com/r/popular.json");
+      const response = await data.json();
+      console.log(response);
+      if (isSubbed) {
+        setRedditData(response.data.children);
+      }
+    };
+    fetchData().catch(console.error);
+
+    return () => (isSubbed = false);
+  }, []);
 
   // useEffect(() => {
-  //   const fetchBest = fetch('https://www.reddit.com/best.json')
-  //   .then((res) => res.json())
-  //   .then((jsonRes) => {
-  //     setRedditData(jsonRes.data.children)
-  //   })
-  // }, [])
+  //   let isSubbed = true;
+  //   const fetchData = async () => {
+  //     const data = await fetch("https://www.reddit.com/subreddits.json");
+  //     const response = await data.json();
 
+  //     if (isSubbed) {
+  //       setSubredditData(response);
+  //     }
+  //   };
+  //   fetchData().catch(console.error);
+  //   return () => (isSubbed = false);
+  // }, []);
+
+
+
+  console.log(redditData);
   return (
     <div>
-      <RedditClient />
-      {/* <button onClick={fetchTest} >Fetch data</button> */}
+      <RedditClient redditData={redditData} />
     </div>
   );
 }
