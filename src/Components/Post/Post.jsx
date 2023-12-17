@@ -6,25 +6,27 @@ import { useState, useEffect } from "react";
 const Post = ({ title, author, image, created, subreddit, id }) => {
   const [loadComments, setLoadComments] = useState(false);
   const [commentData, setCommentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   const newTitle = title
     .split(" ")
     .join("_")
     .replace(/[^\w\s]/gi, "");
+
   const handleComments = (e) => {
     if (!loadComments) {
+    setIsLoading(true)
       const fetchCommentData = async () => {
         const data = await fetch(
           `https://www.reddit.com/r/${subreddit}/comments/${id}/${newTitle}.json`
         );
         const response = await data.json();
-
         setCommentData(response[1].data.children);
+        setIsLoading(false)
       };
       fetchCommentData();
     }
     setLoadComments(!loadComments);
   };
-  console.log(commentData)
   // useEffect(() => {
   //     const fetchComments = async () => {
   //       const data = await fetch(
@@ -43,7 +45,7 @@ const Post = ({ title, author, image, created, subreddit, id }) => {
         <h1>{title}</h1>
         <h2></h2>
         <span>
-          <img src={image} />
+          {(image !== '') ? <></> : <img src={image} />}
         </span>
         <div>
           <p>posted By {author}</p>
@@ -51,6 +53,7 @@ const Post = ({ title, author, image, created, subreddit, id }) => {
           <button value={id} onClick={handleComments}>
             Load Comments
           </button>
+          {isLoading && <p>Loading comments...</p>}
           {!!loadComments && <CommentsList commentData={commentData} />}
         </div>
       </div>

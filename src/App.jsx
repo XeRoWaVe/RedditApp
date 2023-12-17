@@ -4,23 +4,22 @@ import RedditClient from "./Components/RedditClient/RedditClient";
 
 function App() {
   const [redditData, setRedditData] = useState([]);
-  const [subredditData, setSubredditData] = useState({});
+  const [subreddit, setSubreddit] = useState("popular");
   const [commentsData, setCommentsData] = useState({});
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    let isSubbed = true;
     const fetchData = async () => {
-      const data = await fetch("https://www.reddit.com/r/popular.json");
+      setIsLoading(false)
+      const data = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
       const response = await data.json();
-      console.log(response);
-      if (isSubbed) {
-        setRedditData(response.data.children);
-      }
+      setRedditData(response.data.children);
     };
-    fetchData().catch(console.error);
+    fetchData().then(setIsLoading(true)).catch(console.error);
 
-    return () => (isSubbed = false);
-  }, []);
+  }, [subreddit]);
+  console.log(redditData)
+
 
   // useEffect(() => {
   //   let isSubbed = true;
@@ -36,12 +35,10 @@ function App() {
   //   return () => (isSubbed = false);
   // }, []);
 
-
-
-  console.log(redditData);
+  console.log(subreddit);
   return (
     <div>
-      <RedditClient redditData={redditData} />
+      <RedditClient redditData={redditData} setSubreddit={setSubreddit} isLoading={isLoading} />
     </div>
   );
 }

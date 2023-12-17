@@ -1,11 +1,11 @@
+import './Comment.css'
+
 const Comment = (props) => {
     return (
-        <div>
-            <p>{props.author}</p>
-            <p>{props.body}</p>
-            <p>{props.created}</p>
-            <p>{props.author}</p>
-            <p>{props.author}</p>
+        <div className="container">
+           <p>Author: <a href={`https://www.reddit.com/user/${props.author}`} target="_blank" >{props.author}</a></p>
+            <p>Body: {props.body}</p>
+            <p>Created: {props.created}</p>
         </div>
     )
 }
