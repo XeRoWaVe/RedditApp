@@ -3,7 +3,7 @@ import Storylist from "../Storylist/Storylist";
 import Subreddits from "../Subreddits/Subreddits";
 import './RedditClient.css'
 
-const RedditClient = ({redditData, setSubreddit, isLoading}) => {
+const RedditClient = ({redditData, setSubreddit, setRedditData}) => {
 
   // let storylist
   // if (isLoading){
@@ -13,9 +13,9 @@ const RedditClient = ({redditData, setSubreddit, isLoading}) => {
   // }
   
   return (
-    <div>
-      <Navigation />
-      <div className="container">
+    <div className="">
+        <Navigation setRedditData={setRedditData} setSubreddit={setSubreddit} />
+      <div className="flex">
       <Storylist redditData={redditData} />
       <Subreddits setSubreddit={setSubreddit} />
       </div>

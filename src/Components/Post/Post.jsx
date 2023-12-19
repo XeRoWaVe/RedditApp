@@ -3,7 +3,7 @@ import { time_ago } from "../../Utilities/Utilities";
 import CommentsList from "../CommentsList/CommentsList";
 import { useState, useEffect } from "react";
 
-const Post = ({ title, author, image, created, subreddit, id }) => {
+const Post = ({ title, author, image, created, subreddit, id, ups, downs }) => {
   const [loadComments, setLoadComments] = useState(false);
   const [commentData, setCommentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
@@ -27,6 +27,15 @@ const Post = ({ title, author, image, created, subreddit, id }) => {
     }
     setLoadComments(!loadComments);
   };
+// console.log(image)
+//   const images = () => {
+//     if (image[id] !== '') {
+//       return <img src={image[id]} />
+//     } else {
+//       return <></>
+//     }
+//   }
+
   // useEffect(() => {
   //     const fetchComments = async () => {
   //       const data = await fetch(
@@ -40,23 +49,22 @@ const Post = ({ title, author, image, created, subreddit, id }) => {
   //   }, []);
 
   return (
-    <div className="post-container">
-      <div>
+    <div className=" rounded-sm border-2 border-solid p-2 m-2 shadow-lg ">
         <h1>{title}</h1>
-        <h2></h2>
-        <span>
-          {(image !== '') ? <></> : <img src={image} />}
-        </span>
-        <div>
+        <h2>{ups}/{downs}</h2>
+          {<img className="" src={image} onError={event => {
+            event.target.src = ""
+            event.onerror = null
+          }} />}
           <p>posted By {author}</p>
           <p>posted when {time_ago(created)}</p>
-          <button value={id} onClick={handleComments}>
-            Load Comments
-          </button>
+          {!loadComments ? <button value={id} onClick={handleComments} className="border-2 border-solid rounded-md shadow-md p-1 ring-2 hover:ring-4 bg-slate-500 text-white">
+            Open Comments
+          </button> : <button value={id} onClick={handleComments} className="animate-pulse border-2 border-solid shadow-md rounded-md p-1 ring-2 hover:ring-4 ring-red-900">
+            Close comments
+          </button>}
           {isLoading && <p>Loading comments...</p>}
           {!!loadComments && <CommentsList commentData={commentData} />}
-        </div>
-      </div>
     </div>
   );
 };
