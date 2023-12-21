@@ -14,7 +14,8 @@ export default {
         'black-wash': '#0D0D0D'
       },
       boxShadow: {
-        'new': '0px 0px 20px 20px black'
+        'new': '0px 0px 20px 20px black',
+        'insetShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 10px 0px inset;'
       }
     },
   },

@@ -1,9 +1,9 @@
-import "./Navigation.css";
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 
 const Navigation = ({ setRedditData, setSubreddit }) => {
   const [term, setTerm] = useState("");
-  const inputRef = useRef(null);
+  const [stickyClass, setStickyClass] = useState("relative");
+  // const inputRef = useRef(null);
   // const handleChange = (e) => {
   //     e.preventDefault()
   //     const target = e.target.value
@@ -11,28 +11,51 @@ const Navigation = ({ setRedditData, setSubreddit }) => {
   //     setTerm(encodeTerm)
   //     console.log(term)
   // }
-  const handleChange = (e) => {
+
+  useEffect(() => {
+    window.addEventListener("scroll", stickNavigation);
+
+    return () => {
+      window.removeEventListener("scroll", stickNavigation);
+    };
+  }, []);
+
+  const stickNavigation = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight > 100
+        ? setStickyClass("fixed w-[98%] -top-6 z-50")
+        : setStickyClass("relative");
+    }
+  };
+
+  const valueChange = (event) => {
+    setSubreddit(event.target.value);
+  };
+  const handleChange = useCallback((e) => {
     e.preventDefault();
     const encodeTerm = encodeURIComponent(e.target.value);
     setTerm(encodeTerm);
-  };
-  console.log(term);
-  const handleSubmit = (e) => {
+  });
+
+  const handleSubmit = useCallback(() => {
     if (term !== "") {
       fetch(`https://www.reddit.com/search.json?q=${term}`)
         .then((res) => res.json())
         .then((jsonRes) => setRedditData(jsonRes.data.children))
         .catch((err) => console.log(err));
     } else {
-        fetch(`https://www.reddit.com/r/popular.json`)
+      fetch(`https://www.reddit.com/r/popular.json`)
         .then((res) => res.json())
         .then((jsonRes) => setRedditData(jsonRes.data.children))
         .catch((err) => console.log(err));
     }
-  };
+  });
 
   return (
-    <div className="navigation font-bold flex justify-between items-center rounded-full border-2 border-solid m-6 p-2 z-20 shadow-lg">
+    <div
+      className={`navigation z-50 font-bold flex justify-between items-center rounded-full border-nero border-solid m-6 p-2 shadow-black shadow-xl ${stickyClass} bg-white text-black`}
+    >
       <a href="/" onClick={() => setSubreddit("home")}>
         <img
           className="h-12 animate-spin"
@@ -56,19 +79,31 @@ const Navigation = ({ setRedditData, setSubreddit }) => {
       </div>
       <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
         <a href="https://www.reddit.com/user/XeRoWaVe1989" target="_blank">
-        <svg
-          class="absolute w-12 h-12 text-gray-400 -left-1"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
+          <svg
+            class="absolute w-12 h-12 text-gray-400 -left-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
         </a>
+      </div>
+      <div>
+        <label>Subreddits: </label>
+        <select className="border-solid border-2 text-black" onChange={valueChange}>
+          <option>Select</option>
+          <option value="OnePiece">OnePiece</option>
+          <option value="reactjs">reactjs</option>
+          <option value="Overwatch">Overwatch</option>
+          <option value="Science">Science</option>
+          <option value="wow">wow</option>
+          <option value="blackdesertonline">bdo</option>
+        </select>
       </div>
     </div>
   );

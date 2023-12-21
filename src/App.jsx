@@ -1,23 +1,44 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import RedditClient from "./Components/RedditClient/RedditClient";
-
 
 function App() {
   const [redditData, setRedditData] = useState([]);
   const [subreddit, setSubreddit] = useState("popular");
-  const [commentsData, setCommentsData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  // useEffect(() => {
+  //   const fetchData = useCallback(async () => {
+  //     setIsLoading(true);
+  //     const data = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+  //     const response = await data.json();
+  //     setRedditData(await response.data.children);
+
+  //   fetchData().then(setIsLoading(false)).catch(console.error)));
+  // }, [subreddit]);
+
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    const data = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    const response = await data.json();
+    setRedditData(await response.data.children);
+  });
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const data = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
-      const response = await data.json();
-      setRedditData(await response.data.children);
-    };
     fetchData().then(setIsLoading(false)).catch(console.error);
   }, [subreddit]);
+
+  console.log(redditData);
+  // useEffect(()=>{
+  //   const fetchData = useCallback(async () => {
+  //     setIsLoading(true);
+  //     const data = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+  //     const response = await data.json();
+  //     setRedditData(await response.data.children);
+  //   }
+  // )
+  // fetchData().then(setIsLoading(false)).catch(console.error)
+  // }, [subreddit]);
   // useEffect(() => {
   //   let isSubbed = true;
   //   const fetchData = async () => {
@@ -31,16 +52,15 @@ function App() {
   //   fetchData().catch(console.error);
   //   return () => (isSubbed = false);
   // }, []);
-  console.log(redditData)
+
   return (
-    <div className="">
       <RedditClient
+        subreddit={subreddit}
         redditData={redditData}
         setSubreddit={setSubreddit}
         isLoading={isLoading}
         setRedditData={setRedditData}
       />
-    </div>
   );
 }
 
