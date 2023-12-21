@@ -2,12 +2,13 @@ import "./Subreddits.css";
 
 const Subreddits = ({ setSubreddit }) => {
   return (
-    <ul className=" list float-right flex-col border-solid border-2 rounded-sm m-2 p-2 
+    <div className="w-auto">
+         <ul className=" border-solid border-2 rounded-2xl w-56 p-2 
     shadow-lg">
       <li>
         <button
           onClick={() => setSubreddit("OnePiece")}
-          className=" hover:bg-sky-700"
+          className=" hover:bg-sky-700 active:bg-green-200"
         >
           OnePiece
         </button>
@@ -15,7 +16,7 @@ const Subreddits = ({ setSubreddit }) => {
       <li>
         <button
           onClick={() => setSubreddit("reactjs")}
-          className="button hover:bg-red-800 "
+          className="button hover:bg-red-200 "
         >
           reactjs
         </button>
@@ -23,30 +24,32 @@ const Subreddits = ({ setSubreddit }) => {
       <li>
         <button
           onClick={() => setSubreddit("Overwatch")}
-          className="button hover:bg-green-600"
+          className="button hover:bg-green-200"
         >
           Overwatch
         </button>
       </li>
       <li>
-        <button onClick={() => setSubreddit("Science")} className="button">
+        <button onClick={() => setSubreddit("Science")} className="button hover:bg-purple-200">
           Science
         </button>
       </li>
       <li>
-        <button onClick={() => setSubreddit("wow")} className="button">
+        <button onClick={() => setSubreddit("wow")} className="button hover:bg-yellow-200">
           wow
         </button>
       </li>
       <li>
         <button
           onClick={() => setSubreddit("blackdesertonline")}
-          className="button"
+          className="button hover:bg-orange-200"
         >
           blackdesertonline
         </button>
       </li>
     </ul>
+    </div>
+    
   );
 };
 

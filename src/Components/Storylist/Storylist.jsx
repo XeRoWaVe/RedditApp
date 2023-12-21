@@ -4,7 +4,7 @@ import Subreddits from "../Subreddits/Subreddits";
 
 const Storylist = ({ redditData }) => {
   return (
-    <div className="columns-1 float-left">
+    <div className="">
       {redditData.map((item, idx) => (
         <Post
           key={idx}
@@ -17,6 +17,8 @@ const Storylist = ({ redditData }) => {
           subreddit={item.data.subreddit}
           ups={item.data.ups}
           downs={item.data.downs}
+          height={item.data.thumbnail_height}
+          width={item.data.thumbnail_width}
         />
       ))}
     </div>

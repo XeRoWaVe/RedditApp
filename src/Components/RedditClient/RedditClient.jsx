@@ -15,7 +15,7 @@ const RedditClient = ({redditData, setSubreddit, setRedditData}) => {
   return (
     <div className="">
         <Navigation setRedditData={setRedditData} setSubreddit={setSubreddit} />
-      <div className="flex">
+      <div className="flex ">
       <Storylist redditData={redditData} />
       <Subreddits setSubreddit={setSubreddit} />
       </div>

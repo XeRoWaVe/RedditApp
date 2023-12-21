@@ -7,11 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        'cyber-blue': '#05C7F2',
-        'cyber-black': '#01060D',
-        'cyber-gray': '#0C1726',
-        'cyber-pink': '#F2AB9B',
-        'cyber-red': '#732C26'
+        'quicksilver': '#A6A6A6',
+        'revolution': '#737373',
+        'sumi-ink': '#595959',
+        'nero': '#262626',
+        'black-wash': '#0D0D0D'
+      },
+      boxShadow: {
+        'new': '0px 0px 20px 20px black'
       }
     },
   },
