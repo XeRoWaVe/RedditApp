@@ -15,14 +15,6 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
 
   const createdSince = created * 1000;
 
-  // console.log(createdSince);
-  // const spotLightEl = document.querySelector('#spotlight')
-  // const handleMouseMove = (event) => {
-  //   const { clientX, clientY } = event;
-
-  //   spotLightEl.style.background = `radial-gradient(circle at ${clientX}px ${clientY}px, #00000000 10px, #000000ee 350px)`
-  // }
-
   const handleComments = (e) => {
     if (!loadComments) {
       setIsLoading(true);
@@ -38,44 +30,6 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
     }
     setLoadComments(!loadComments);
   };
-
-  // const handleComments = useCallback(() => {
-  //   if (!loadComments)
-  //     setIsLoading(true);
-  //     const fetchCommentData = async () => {
-  //       const data = await fetch(
-  //         `https://www.reddit.com/r/${subreddit}/comments/${id}/${newTitle}.json`
-  //       );
-  //       const response = await data.json();
-  //       setCommentData(response[1].data.children);
-  //       setIsLoading(false);
-  //     }
-  //     fetchCommentData().then(setLoadComments(!loadComments))
-  // })
-
-  // useEffect(() => {
-  //   fetchCommentData().then(setLoadComments(!loadComments))
-  // }, [!loadComments])
-  // console.log(image)
-  //   const images = () => {
-  //     if (image[id] !== '') {
-  //       return <img src={image[id]} />
-  //     } else {
-  //       return <></>
-  //     }
-  //   }
-
-  // useEffect(() => {
-  //     const fetchComments = async () => {
-  //       const data = await fetch(
-  //         "https://www.reddit.com/r/AskReddit/comments/18ka1lu/what_is_normalized_that_needs_to_be_weird_again.json"
-  //       );
-  //       const response = await data.json();
-  //       setCommentsData(response[1].data.children);
-  //     };
-  //     fetchComments().catch(console.error)
-
-  //   }, []);
 
   return (
     <div className=" bg-white text-black-wash  border-nero  p-10 m-4 shadow-black shadow-xl w-3/6 z-10 ">

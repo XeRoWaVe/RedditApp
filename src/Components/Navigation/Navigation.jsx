@@ -3,14 +3,6 @@ import { useCallback, useState, useRef, useEffect } from "react";
 const Navigation = ({ setRedditData, setSubreddit }) => {
   const [term, setTerm] = useState("");
   const [stickyClass, setStickyClass] = useState("relative");
-  // const inputRef = useRef(null);
-  // const handleChange = (e) => {
-  //     e.preventDefault()
-  //     const target = e.target.value
-  //     const encodeTerm = encodeURIComponent(target)
-  //     setTerm(encodeTerm)
-  //     console.log(term)
-  // }
 
   useEffect(() => {
     window.addEventListener("scroll", stickNavigation);
@@ -32,7 +24,7 @@ const Navigation = ({ setRedditData, setSubreddit }) => {
   const valueChange = (event) => {
     setSubreddit(event.target.value);
   };
-  
+
   const handleChange = useCallback((e) => {
     e.preventDefault();
     const encodeTerm = encodeURIComponent(e.target.value);
@@ -96,7 +88,10 @@ const Navigation = ({ setRedditData, setSubreddit }) => {
       </div>
       <div>
         <label>Subreddits: </label>
-        <select className="border-solid border-2 text-black" onChange={valueChange}>
+        <select
+          className="border-solid border-2 text-black"
+          onChange={valueChange}
+        >
           <option>Select</option>
           <option value="OnePiece">OnePiece</option>
           <option value="reactjs">reactjs</option>
