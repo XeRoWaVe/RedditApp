@@ -8,7 +8,7 @@ const Comment = (props) => {
   return (
     <div className="container m-2 p-2 border-2 border-solid shadow-md">
       <p>
-        Author:{" "}
+        {" "}
         <a
           href={`https://www.reddit.com/user/${props.author}`}
           target="_blank"
@@ -17,8 +17,8 @@ const Comment = (props) => {
           {props.author}
         </a>
       </p>
-      <p>Body: {props.body}</p>
-      <p>Created: {time_ago(createdSince)}</p>
+      <p>{props.body}</p>
+      <p>{time_ago(createdSince)}</p>
     </div>
   );
 };
