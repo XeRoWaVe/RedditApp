@@ -32,6 +32,7 @@ const Navigation = ({ setRedditData, setSubreddit }) => {
   const valueChange = (event) => {
     setSubreddit(event.target.value);
   };
+  
   const handleChange = useCallback((e) => {
     e.preventDefault();
     const encodeTerm = encodeURIComponent(e.target.value);
