@@ -1,8 +1,10 @@
 import { time_ago } from "../../Utilities/Utilities";
 
-const createdSince = props.created * 1000
+
 
 const Comment = (props) => {
+
+  const createdSince = props.created * 1000
   return (
     <div className="container m-2 p-2 border-2 border-solid shadow-md">
       <p>
