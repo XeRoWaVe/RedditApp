@@ -13,6 +13,7 @@ const Comment = (props) => {
           href={`https://www.reddit.com/user/${props.author}`}
           target="_blank"
           className="text-blue-700 font-bold"
+          alt=""
         >
           {props.author}
         </a>

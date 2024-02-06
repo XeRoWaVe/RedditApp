@@ -6,7 +6,7 @@ import ReactPlayer from "react-player";
 const Post = ({ created, subreddit, redditData, data, id }) => {
   const [loadComments, setLoadComments] = useState(false);
   const [commentData, setCommentData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const newTitle = data.title
     .split(" ")
@@ -15,32 +15,33 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
 
   const createdSince = created * 1000;
 
-  const handleComments = (e) => {
+  const fetchCommentData = async () => {
+    const data = await fetch(
+      `https://www.reddit.com/r/${subreddit}/comments/${id}/${newTitle}.json`
+    );
+    const response = await data.json();
+    setCommentData(await response[1].data.children)
+    commentData ? setIsLoading(false) : setIsLoading(true)
+  };
+
+  const handleComments = () => {
     if (!loadComments) {
-      setIsLoading(true);
-      const fetchCommentData = async () => {
-        const data = await fetch(
-          `https://www.reddit.com/r/${subreddit}/comments/${id}/${newTitle}.json`
-        );
-        const response = await data.json();
-        setCommentData(await response[1].data.children);
-        setIsLoading(false);
-      };
-      fetchCommentData();
+      fetchCommentData().catch(console.error)
     }
     setLoadComments(!loadComments);
   };
 
   return (
-    <div className=" bg-white text-black-wash  border-nero  p-10 m-4 shadow-black shadow-xl w-3/6 z-10 ">
-      <a href={`https://www.reddit.com/${data.permalink}`} target="_blank">
+    <div className=" bg-white text-black-wash  border-nero  p-10 m-4 shadow-black shadow-xl w-3/6 z-10 rounded-lg">
+      <a href={`https://www.reddit.com/${data.permalink}`} target="_blank" aria-label="Post is a link to poster's reddit profile" alt="post body links to author profile page">
         <div className="float-left mr-10">
-          <button className="">
+          <button className="" aria-label="upvote button">
             <svg
               className=" hover:text-green-600 w-6 h-6 text-gray-800 dark:text-white "
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 10 14"
+              alt="like button"
             >
               <path
                 stroke="currentColor"
@@ -52,12 +53,13 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
             </svg>
           </button>
           <h3 className="text-blue-500 font-bold">{data.ups}-Likes</h3>
-          <button className="">
+          <button className="" aria-label="downvote button">
             <svg
               class="w-6 h-6 text-white dark:text-white hover:text-red-600"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 10 14"
+              alt="dislike button"
             >
               <path
                 stroke="currentColor"
@@ -79,7 +81,8 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
             />
           ) : data.is_gallery ? (
             <a href={data.url} target="_blank" className="m-8">
-              <img src={data.thumbnail} />
+              <img src={data.thumbnail} width="360" height="240"
+              alt="gallery images" />
               <p>Gallery</p>
             </a>
           ) : data.selftext ? (
@@ -89,12 +92,13 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
           )}
         </div>
         <div className="flex justify-between mt-8">
-          <p>
+          <p aria-label="posted by">
             Posted By:{" "}
             <a
               href={`https://www.reddit.com/user/${data.author}`}
               target="_blank"
               className="text-blue-700 font-bold"
+              aria-label="author name is link to reddot profile"
             >
               {data.author}
             </a>
@@ -108,6 +112,7 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
             value={data.id}
             onClick={handleComments}
             className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            aria-label="button to load comments of post"
           >
             Comments
             <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-700 bg-gray-300 rounded-full">
@@ -119,6 +124,7 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
             disabled
             type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+            aria-label="button signals comments are loading"
           >
             <svg
               aria-hidden="true"
@@ -144,6 +150,7 @@ const Post = ({ created, subreddit, redditData, data, id }) => {
             value={data.id}
             onClick={handleComments}
             className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            aria-label="button to close current comments"
           >
             Close comments
           </button>

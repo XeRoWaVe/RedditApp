@@ -9,7 +9,7 @@ const RedditClient = ({
 }) => {
   return (
     <div className="">
-      <Navigation setRedditData={setRedditData} setSubreddit={setSubreddit} />
+      <Navigation setRedditData={setRedditData} setSubreddit={setSubreddit} subreddit={subreddit} />
       <h1 className="shadow-insetShadow w-fit m-auto font-bold size-40 h-fit tracking-tight">
         {subreddit}
       </h1>
